@@ -13,9 +13,11 @@ app不得不在运行时一个一个询问用户授予权限。Android 6.0(api23
   <img src="https://github.com/linglongxin24/MPermissions/blob/master/screenshorts/effect2.png?raw=true" width="50%" height="50*"/>
   
 #一.Android6.0M对权限的划分
+Android6.0M中对用户的权限分为了一般权限和危险权限，这些危险权限除了在AndroidManifest.xml中注册以外，还需要在使用的时候对用户进行请求权限弹窗提醒，才可以使用。
+这些危险权限如下：
+![权限图](https://github.com/linglongxin24/MPermissions/blob/master/screenshorts/permissions.png?raw=true)
 
-
-#一.封装一个MPermissionsActivity的思路和步骤
+#二.封装一个MPermissionsActivity的思路和步骤
  * 第一步：检测所有的权限是否都已授权
  
 ```
@@ -188,7 +190,7 @@ app不得不在运行时一个一个询问用户授予权限。Android 6.0(api23
     }
 ```
 
-#二.完整的MPermissionsActivity代码
+#三.完整的MPermissionsActivity代码
 
 ```
 package cn.bluemobi.dylan.mpermissions;
@@ -357,4 +359,117 @@ public class MPermissionsActivity extends AppCompatActivity {
 
 ```
 
- #
+#四.用法
+
+ * 布局文件activity_main.xml
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="cn.bluemobi.dylan.mpermissions.MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick1"
+        android:text="打电话" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick2"
+        android:text="写SD卡" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClick3"
+        android:text="拍照" />
+</LinearLayout>
+
+```
+
+* MainActivity中使用：继承MPermissionsActivity即可
+
+```
+package cn.bluemobi.dylan.mpermissions;
+
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+
+public class MainActivity extends MPermissionsActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+
+    /**
+     * 打电话
+     *
+     * @param view
+     */
+    public void onClick1(View view) {
+        requestPermission(new String[]{Manifest.permission.CALL_PHONE}, 0x0001);
+    }
+
+    /**
+     * 写SD卡
+     *
+     * @param view
+     */
+    public void onClick2(View view) {
+        requestPermission(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0x0002);
+    }
+
+    /**
+     * 拍照
+     *
+     * @param view
+     */
+    public void onClick3(View view) {
+        requestPermission(new String[]{Manifest.permission.CAMERA}, 0x0003);
+    }
+
+    /**
+     * 权限成功回调函数
+     *
+     * @param requestCode
+     */
+    @Override
+    public void permissionSuccess(int requestCode) {
+        super.permissionSuccess(requestCode);
+        switch (requestCode) {
+            case 0x0001:
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:13468857714"));
+                startActivity(intent);
+                break;
+        }
+
+    }
+
+}
+
+```
+
+#五.[GitHub](https://github.com/linglongxin24/MPermissions)

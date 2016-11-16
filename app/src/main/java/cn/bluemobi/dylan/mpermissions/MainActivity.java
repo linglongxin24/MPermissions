@@ -42,7 +42,7 @@ public class MainActivity extends MPermissionsActivity {
     }
 
     /**
-     * 处理权限
+     * 权限成功回调函数
      *
      * @param requestCode
      */
