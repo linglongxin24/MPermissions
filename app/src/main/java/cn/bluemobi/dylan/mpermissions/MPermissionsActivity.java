@@ -38,25 +38,6 @@ public class MPermissionsActivity extends AppCompatActivity {
             List<String> needPermissions = getDeniedPermissions(permissions);
             ActivityCompat.requestPermissions(this, needPermissions.toArray(new String[needPermissions.size()]), REQUEST_CODE_PERMISSION);
         }
-
-    }
-
-    /**
-     * 获取权限集中需要申请权限的列表
-     *
-     * @param permissions
-     * @return
-     */
-    private List<String> getDeniedPermissions(String[] permissions) {
-        List<String> needRequestPermissionList = new ArrayList<>();
-        for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) !=
-                    PackageManager.PERMISSION_GRANTED ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
-                needRequestPermissionList.add(permission);
-            }
-        }
-        return needRequestPermissionList;
     }
 
     /**
@@ -78,6 +59,25 @@ public class MPermissionsActivity extends AppCompatActivity {
         }
         return true;
     }
+
+    /**
+     * 获取权限集中需要申请权限的列表
+     *
+     * @param permissions
+     * @return
+     */
+    private List<String> getDeniedPermissions(String[] permissions) {
+        List<String> needRequestPermissionList = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) !=
+                    PackageManager.PERMISSION_GRANTED ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+                needRequestPermissionList.add(permission);
+            }
+        }
+        return needRequestPermissionList;
+    }
+
 
     /**
      * 系统请求权限回调
@@ -153,6 +153,10 @@ public class MPermissionsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 权限获取失败
+     * @param requestCode
+     */
     public void permissionFail(int requestCode) {
         Log.d(TAG, "获取权限失败=" + requestCode);
     }
