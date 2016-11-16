@@ -7,9 +7,12 @@ app不得不在运行时一个一个询问用户授予权限。Android 6.0(api23
 下面是我做的一个轻量级的封装，可以减少很多重复的工作。
 
 效果图
- * 请求权限
+请求权限         
+ 
   <img src="https://github.com/linglongxin24/MPermissions/blob/master/screenshorts/effect1.png?raw=true" width="50%" height="50*"/>
- * 用户禁止了权限
+  
+用户禁止了权限          
+ 
   <img src="https://github.com/linglongxin24/MPermissions/blob/master/screenshorts/effect2.png?raw=true" width="50%" height="50*"/>
   
 #一.Android6.0M对权限的划分
