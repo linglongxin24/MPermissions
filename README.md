@@ -19,7 +19,6 @@ app不得不在运行时一个一个询问用户授予权限。Android 6.0(api23
 Android6.0M中对用户的权限分为了一般权限和危险权限，这些危险权限除了在AndroidManifest.xml中注册以外，还需要在使用的时候对用户进行请求权限弹窗提醒，才可以使用。
 这些危险权限如下：
 <img src="https://github.com/linglongxin24/MPermissions/blob/master/screenshorts/permissions.png?raw=true" width="120%" height="120*"/>
-![权限图](https://github.com/linglongxin24/MPermissions/blob/master/screenshorts/permissions.png?raw=true)
 
 #二.封装一个MPermissionsActivity的思路和步骤
  * 第一步：检测所有的权限是否都已授权
